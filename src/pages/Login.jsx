@@ -1,9 +1,20 @@
 import { Facebook, GitHub, Instagram, Twitter } from "@material-ui/icons";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/apiCalls";
 import "./Login.css";
 
 const Login = () => {
   const [className, setClassName] = useState("right-panel-deactive");
+  const [username, setUserName] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const { isFetching, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
 
   // to add and remove the classList on clicking signup/signin button
   const handleClick = (props) => {
@@ -14,29 +25,24 @@ const Login = () => {
     }
   };
 
+  // to sign up
+  const RegisterHandleClick = (e) => {
+    e.preventDefault();
+    register(dispatch, { username, registerEmail, registerPassword });
+  };
+
   return (
     <div>
       <h2>Sign in/up Form</h2>
       <div className={className} id="container">
         <div className="form-container sign-up-container" id="form-container">
           <form action="#">
-            <h1>Create Account</h1>
-            <div className="social-container">
-              <a href="#" className="social">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-google-plus-g"></i>
-              </a>
-              <a href="#" className="social">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-            <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button>Sign Up</button>
+            <h1 className="register-head">Create Account</h1>
+            <input type="text" placeholder="Username" onChange={(e) => setUserName(e.target.value)} />
+            <input type="email" placeholder="Email" onChange={(e) => setRegisterEmail(e.target.value)} />
+            <input type="password" placeholder="Password" onChange={(e) => setRegisterPassword(e.target.value)} />
+            <input type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
+            <button onClick={RegisterHandleClick}>Sign Up</button>
           </form>
         </div>
         <div className="form-container sign-in-container" id="form-container">
@@ -54,8 +60,8 @@ const Login = () => {
               </a>
             </div>
             <span>or use your account</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="email" placeholder="Email" onChange={(e) => setLoginEmail(e.target.value)} />
+            <input type="password" placeholder="Password" onChange={(e) => setLoginPassword(e.target.value)} />
             <a href="#">Forgot your password?</a>
             <button>Sign In</button>
           </form>

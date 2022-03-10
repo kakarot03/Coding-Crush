@@ -1,12 +1,19 @@
 import React from "react";
 import Game from "./pages/Game";
 import Login from "./pages/Login";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  const user = useSelector((state) => state.user.currentUser);
   return (
-    <div>
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Game />}></Route>
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />}></Route>
+        {/* <Route path="/register" element={user ? <Navigate to="/" /> : <Register />}></Route> */}
+      </Routes>
+    </BrowserRouter>
   );
 };
 
