@@ -8,15 +8,22 @@ import angular from "../images/angular.png";
 import python from "../images/python.png";
 import react from "../images/react.png";
 import blank from "../images/blank.png";
+import { logOut } from "../redux/userRedux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../redux/apiCalls";
 
 const width = 8;
 const candyColors = [java, swift, angular, python, react, vue];
 
 const Game = () => {
+  const user = useSelector((state) => state.user.currentUser);
   const [currentColorArrangement, setCurrentColorArrangement] = useState([]);
   const [squareBeingDragged, setSquareBeingDragged] = useState(null);
   const [squareBeingReplaced, setSquareBeingReplaced] = useState(null);
   const [scoreDisplay, setScoreDisplay] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const dispatch = useDispatch();
 
   const checkForColumnOfFour = () => {
     for (let i = 0; i <= 39; i++) {
@@ -157,9 +164,43 @@ const Game = () => {
     return () => clearInterval(timer);
   }, [checkForColumnOfFour, checkForRowOfFour, checkForColumnOfThree, checkForRowOfThree, moveIntoSquareBelow, currentColorArrangement]);
 
+  const LogoutHandleClick = () => {
+    localStorage.clear();
+    logout(dispatch);
+  };
+
+  const navigate = useNavigate();
+  const routeChange = () => {
+    const path = `login`;
+    navigate(path);
+  };
+
+  const getScore = async () => {
+    user && setHighScore(user.highscore);
+  };
+
+  const updateScore = () => {};
+
+  useEffect(() => {
+    getScore();
+    updateScore();
+  }, []);
+
   return (
     <div>
-      <h3>HighScore : </h3>
+      <div className="logout">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            routeChange();
+            LogoutHandleClick();
+          }}
+        >
+          LogOut
+        </button>
+      </div>
+      <h2 style={{ textAlign: "center" }}>Hello {user.username}, come let's set a new Highcore</h2>
+      <h3 style={{ textAlign: "center" }}>HighScore : {highScore}</h3>
       <div className="app">
         <ScoreBoard score={scoreDisplay} />
         <div className="game">

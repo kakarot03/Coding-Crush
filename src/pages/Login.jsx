@@ -1,7 +1,7 @@
 import { Facebook, GitHub, Instagram, Twitter } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../redux/apiCalls";
+import { register, login } from "../redux/apiCalls";
 import "./Login.css";
 
 const Login = () => {
@@ -29,6 +29,11 @@ const Login = () => {
   const RegisterHandleClick = (e) => {
     e.preventDefault();
     register(dispatch, { username, registerEmail, registerPassword });
+  };
+
+  const LoginHandleClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { loginEmail, loginPassword });
   };
 
   return (
@@ -63,7 +68,7 @@ const Login = () => {
             <input type="email" placeholder="Email" onChange={(e) => setLoginEmail(e.target.value)} />
             <input type="password" placeholder="Password" onChange={(e) => setLoginPassword(e.target.value)} />
             <a href="#">Forgot your password?</a>
-            <button>Sign In</button>
+            <button onClick={LoginHandleClick}>Sign In</button>
           </form>
         </div>
         <div className="overlay-container" id="overlay-container">

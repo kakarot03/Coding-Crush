@@ -1,4 +1,4 @@
-import { loginFailure, loginStart, loginSuccess, registerFailure, registerStart, registerSuccess } from "./userRedux";
+import { loginFailure, loginStart, loginSuccess, logOut, registerFailure, registerStart, registerSuccess } from "./userRedux";
 import axios from "axios";
 
 export const login = async (dispatch, user) => {
@@ -19,4 +19,8 @@ export const register = async (dispatch, user) => {
   } catch (err) {
     return dispatch(registerFailure());
   }
+};
+
+export const logout = (dispatch) => {
+  dispatch(logOut());
 };
