@@ -1,4 +1,3 @@
-import { Facebook, GitHub, Instagram, Twitter } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register, login } from "../redux/apiCalls";

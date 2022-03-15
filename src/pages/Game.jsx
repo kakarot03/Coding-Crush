@@ -8,13 +8,14 @@ import angular from "../images/angular.png";
 import python from "../images/python.png";
 import react from "../images/react.png";
 import blank from "../images/blank.png";
-import { logOut } from "../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/apiCalls";
+import axios from "axios";
 
 const width = 8;
 const candyColors = [java, swift, angular, python, react, vue];
+let flag = false;
 
 const Game = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -24,6 +25,14 @@ const Game = () => {
   const [scoreDisplay, setScoreDisplay] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const dispatch = useDispatch();
+
+  if (scoreDisplay !== 0 && !flag) {
+    setScoreDisplay(0);
+  }
+
+  if (scoreDisplay > highScore && flag) {
+    setHighScore(scoreDisplay);
+  }
 
   const checkForColumnOfFour = () => {
     for (let i = 0; i <= 39; i++) {
@@ -105,6 +114,7 @@ const Game = () => {
   };
 
   const dragStart = (e) => {
+    flag = true;
     setSquareBeingDragged(e.target);
   };
 
@@ -166,6 +176,7 @@ const Game = () => {
 
   const LogoutHandleClick = () => {
     localStorage.clear();
+    updateScore();
     logout(dispatch);
   };
 
@@ -179,15 +190,22 @@ const Game = () => {
     user && setHighScore(user.highscore);
   };
 
-  const updateScore = () => {};
+  const updateScore = async () => {
+    if (scoreDisplay >= highScore) {
+      try {
+        const res = await axios.put("http://localhost:1104/api/users/updateScore", { email: user.email, highscore: highScore });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   useEffect(() => {
     getScore();
-    updateScore();
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "90vh" }}>
       <div className="logout">
         <button
           onClick={(e) => {
