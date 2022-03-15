@@ -12,19 +12,20 @@ router.get("/getScore", async (req, res) => {
   }
 });
 
-module.exports = router;
-
 router.put("/updateScore", async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.body.email },
       {
-        $set: req.body,
-      },
-      { new: true }
+        $set: {
+          highscore: req.body.highscore,
+        },
+      }
     );
     res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+module.exports = router;
