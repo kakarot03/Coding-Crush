@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Game.css";
 import ScoreBoard from "../components/ScoreBoard";
 import java from "../images/java.png";
 import vue from "../images/vue.png";
@@ -12,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/apiCalls";
 import axios from "axios";
+import "./Game.css";
 
 const width = 8;
 const candyColors = [java, swift, angular, python, react, vue];
