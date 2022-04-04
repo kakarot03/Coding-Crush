@@ -24,7 +24,9 @@ const _dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(_dirname, "/client/build")));
 
-  app.get("*", (req, res) => res.sendFile(path.resolve(_dirname, "client", "build", "index.html")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(_dirname, "client", "build", "index.html"))
+  );
 } else {
   app.get("/", (req, res) => {
     res.send("API is running..");
@@ -33,4 +35,9 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 1104;
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}..`));
+app.listen(
+  PORT,
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}..`
+  )
+);
