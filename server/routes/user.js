@@ -28,4 +28,15 @@ router.put("/updateScore", async (req, res) => {
   }
 });
 
+router.get("/getAllUsers", async (req, res) => {
+  try {
+    const user = await User.find();
+    const array = user.map((e) => e);
+    return res.status(200).send(array);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 module.exports = router;
