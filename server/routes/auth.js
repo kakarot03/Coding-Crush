@@ -55,4 +55,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/googleRegister", async (req, res) => {
+  const newUser = new User({
+    username: req.body.username,
+    email: req.body.registerEmail,
+    password: CryptoJS.AES.encrypt(req.body.registerPassword, process.env.PASS_SEC).toString(),
+  });
+
+  try {
+    const user = User.findOne({ username: newUser.username });
+    if (user) {
+      return res.status(200).json(user);
+    }
+
+    const savedUser = await newUser.save();
+    return res.status(201).json(savedUser);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
 module.exports = router;
