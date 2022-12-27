@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:1104/api/";
-// const BASE_URL = "https://coding-crush.herokuapp.com/api/";
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..BxSmyjYxjA9ILjJfYmy2oMmPNgp-ujrKpjolwmIH0k4";
+// const BASE_URL = "http://localhost:1104/api/";
+const BASE_URL = "https://coding-crush.onrender.com/api/";
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..BxSmyjYxjA9ILjJfYmy2oMmPNgp-ujrKpjolwmIH0k4";
 
 var user1 = "";
 const user = () => {
