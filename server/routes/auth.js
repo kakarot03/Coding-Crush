@@ -63,7 +63,7 @@ router.post("/googleRegister", async (req, res) => {
   });
 
   try {
-    const user = User.findOne({ username: newUser.username });
+    const user = await User.findOne({ username: newUser.username });
     if (user) {
       return res.status(200).json(user);
     }
@@ -71,6 +71,7 @@ router.post("/googleRegister", async (req, res) => {
     const savedUser = await newUser.save();
     return res.status(201).json(savedUser);
   } catch (err) {
+    console.log(err);
     return res.status(500).json(err);
   }
 });
