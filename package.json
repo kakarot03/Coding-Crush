@@ -1,0 +1,21 @@
+{
+  "name": "coding-crush",
+  "version": "1.0.0",
+  "description": "Web Game",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install  && cd ../client && npm install && npm run build",
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kakarot03/Coding-Crush.git"
+  },
+  "author": "srivarshan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kakarot03/Coding-Crush/issues"
+  },
+  "homepage": "https://github.com/kakarot03/Coding-Crush#readme"
+}
